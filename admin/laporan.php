@@ -5,6 +5,7 @@ require 'layout_header.php';
 $bulan = ambilsatubaris($conn,"SELECT SUM(total_harga) AS total FROM detail_transaksi INNER JOIN transaksi ON transaksi.id_transaksi = detail_transaksi.transaksi_id WHERE status_bayar = 'dibayar' AND MONTH(tgl_pembayaran) = MONTH(NOW())");
 $tahun = ambilsatubaris($conn,"SELECT SUM(total_harga) AS total FROM detail_transaksi INNER JOIN transaksi ON transaksi.id_transaksi = detail_transaksi.transaksi_id WHERE status_bayar = 'dibayar' AND YEAR(tgl_pembayaran) = YEAR(NOW())");
 $minggu = ambilsatubaris($conn,"SELECT SUM(total_harga) AS total FROM detail_transaksi INNER JOIN transaksi ON transaksi.id_transaksi = detail_transaksi.transaksi_id WHERE status_bayar = 'dibayar' AND WEEK(tgl_pembayaran) = WEEK(NOW(), 3)");
+$id_outlet = $_SESSION['outlet_id'];
 // die($minggu['total']);
 
 
@@ -91,42 +92,84 @@ WHERE transaksi.status_bayar = 'dibayar' GROUP BY detail_transaksi.paket_id");
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                    <li>
+                </div>
+                <div class="beda">
+                    <div>
                         <a data-toggle="modal" class="btn btn-primary" data-target="#smallModal">
                             <!-- <i class="material-icons">account_circle</i> -->
                             <span>Laporan Penjualan</span>
                         </a>
-                    </li>
+                    </div>
+                    <div class="modal fade" id="smallModal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="smallModalLabel">Laporan Penjualan Sesuai Outlet</h4>
+                                </div>
+                                <div class="modal-body">
+                                <form method="POST" action="cetaklaporan.php?id=<?= $id_outlet ?>" target="blank">
+
+                                <label for="">Tanggal Awal</label>
+
+                                <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="date" name="tgl_awal" class="form-control"  />
+                                        </div>
+                                </div>
+                                <label for="">Tanggal Akhir</label>
+
+                                <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="date" name="tgl_akhir" class="form-control"  />
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary waves-effect">CETAK</button>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal fade" id="smallModal" tabindex="-1" role="dialog">
-                    <div class="modal-dialog modal-sm" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="smallModalLabel">Laporan Penjualan</h4>
-                            </div>
-                            <div class="modal-body">
-                            <form method="POST" action="cetaklaporan.php" target="blank">
+                <div class="bed">
+                    <div style="margin-left: 170px; margin-top: -35px;">
+                        <a data-toggle="modal" class="btn btn-primary" data-target="#kecilModal">
+                            <!-- <i class="material-icons">account_circle</i> -->
+                            <span>Laporan Penjualan General</span>
+                        </a>
+                    </div>
+                    <div class="modal fade" id="kecilModal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="kecilModalLabel">Laporan Penjualan General</h4>
+                                </div>
+                                <div class="modal-body">
+                                <form method="POST" action="cetaklaporangeneral.php" target="blank">
 
-                            <label for="">Tanggal Awal</label>
+                                <label for="">Tanggal Awal</label>
 
-                            <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="date" name="tgl_awal" class="form-control"  />
-                                    </div>
-                            </div>
-                            <label for="">Tanggal Akhir</label>
+                                <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="date" name="tgl_awal" class="form-control"  />
+                                        </div>
+                                </div>
+                                <label for="">Tanggal Akhir</label>
 
-                            <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="date" name="tgl_akhir" class="form-control"  />
-                                    </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary waves-effect">CETAK</button>
-                                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                            </div>
+                                <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="date" name="tgl_akhir" class="form-control"  />
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary waves-effect">CETAK</button>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
 
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -14,18 +14,27 @@ if(isset($_POST['btn-simpan'])){
     $query = "UPDATE outlet SET nama_outlet = '$nama' , alamat_outlet = '$alamat' , telp_outlet='$telp' WHERE id_outlet = " . stripslashes($_GET['id']);
     
     
-    if($_POST['owner_id_new']){
-        $query2 = "UPDATE user SET outlet_id = '" . stripslashes($_GET['id']) . "' WHERE id_user = " . $_POST['owner_id_new'];
-        $query3 = "UPDATE user SET outlet_id = NULL WHERE id_user = " . stripslashes($data['id_user']);
-        $execute3 = bisa($conn,$query3);
-    }else{
-        $query2 = "UPDATE user SET outlet_id = '" . stripslashes($_GET['id']) . "' WHERE id_user = " . stripslashes($_POST['owner_id']);
-    }
+    // if($_POST['owner_id_new']){
+    //     $query2 = "UPDATE user SET outlet_id = '" . stripslashes($_GET['id']) . "' WHERE id_user = " . $_POST['owner_id_new'];
+    //     $query3 = "UPDATE user SET outlet_id = NULL WHERE id_user = " . stripslashes($data['id_user']);
+    //     $execute3 = bisa($conn,$query3);
+    // }else{
+    //     $query2 = "UPDATE user SET outlet_id = '" . stripslashes($_GET['id']) . "' WHERE id_user = " . stripslashes($_POST['owner_id']);
+    // }
 
     $execute = bisa($conn,$query);
-    $execute2 = bisa($conn,$query2);
+    // $execute2 = bisa($conn,$query2);
 
-    if($execute == 1 && $execute2 == 1){
+    // if($execute == 1 && $execute2 == 1){
+    //     $success = 'true';
+    //     $title = 'Berhasil';
+    //     $message = 'Berhasil Mengubah Data';
+    //     $type = 'success';
+    //     header('location: outlet.php?crud='.$success.'&msg='.$message.'&type='.$type.'&title='.$title);
+    // }else{
+    //     echo "Gagal Tambah Data";
+    // }
+    if($execute == 1){
         $success = 'true';
         $title = 'Berhasil';
         $message = 'Berhasil Mengubah Data';
@@ -81,7 +90,7 @@ require'layout_header.php';
                     <label>Nomor Telepon</label>
                     <input type="text" value="<?= htmlspecialchars($data['telp_outlet']); ?>" name="telp_outlet" class="form-control">
                 </div>
-                <?php if($data['nama_user']  == null): ?>
+                <!-- <?php if($data['nama_user']  == null): ?>
                     <div class="form-group">
                         <label>Belum Ada Owner (silahkan pilih owner)</label>
                         <select name="owner_id" class="form-control">
@@ -112,11 +121,11 @@ require'layout_header.php';
                             <?php endforeach ?>
                         </select>
                     </div>
-                <?php endif; ?>
-                <small>Jika Belum Ada Owner, Maka Tambahkan Disini</small>
+                <?php endif; ?> -->
+                <!-- <small>Jika Belum Ada Owner, Maka Tambahkan Disini</small>
                 <a href="pengguna_tambah.php" class="btn btn-primary" style="margin-left: 12px;"> Tambah Pengguna
                     <i class="fa fa-plus"></i>
-                </a>
+                </a> -->
                 <div class="text-right">
                     <button type="reset" class="btn btn-danger">Reset</button>
                     <button type="submit" name="btn-simpan" class="btn btn-primary">Simpan</button>

@@ -74,12 +74,11 @@ require'layout_header.php';
                     <label>Role</label>
                     <select name="role" class="form-control" required>
                         <option value="admin">Admin</option>
-                        <option value="owner">Owner</option>
                         <option value="kasir">Kasir</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Jika Role Nya Kasir Atau Owner Maka Pilih Outlet Dimana Dia Akan Ditempatkan</label>
+                    <label>Pilih Outlet Dimana Dia Akan Ditempatkan</label>
                     <select name="outlet_id" class="form-control">
                         <?php foreach ($outlet as $key): ?>
                             <option value="<?= $key['id_outlet'] ?>"><?= $key['nama_outlet'] ?></option>

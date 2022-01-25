@@ -74,7 +74,7 @@ $data = ambildata($conn,$query);
                                     <h4 class="modal-title" id="smallModalLabel">Password Owner</h4>
                                 </div>
                                 <div class="modal-body">
-                                <form method="POST" action="transaksi_hapus.php?id=<?= $member['id_member'] ?>&outlet=<?= $outlet ?>" target="blank">
+                                <form method="POST" action="pelanggan_hapus.php?id=<?= $member['id_member'] ?>&outlet=<?= $outlet ?>" target="blank">
 
                                 <label for="">Password Owner :</label>
 

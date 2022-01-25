@@ -72,6 +72,7 @@ $data = ambildata($conn,$query);
                                 <th>Member</th>
                                 <th>Paket</th>
                                 <th>Jumlah</th>
+                                <th>Harga Paket</th>
                                 <th>Status</th>
                                 <th>Pemabayaran</th>
                                 <th>Total Harga</th>
@@ -86,6 +87,7 @@ $data = ambildata($conn,$query);
                                     <td><?= htmlspecialchars($transaksi['nama_member']); ?></td>
                                     <td><?= htmlspecialchars($transaksi['nama_paket']); ?></td>
                                     <td><?= htmlspecialchars($transaksi['qty']); ?></td>
+                                    <td><?= htmlspecialchars($transaksi['harga']); ?></td>
                                     <td><?= htmlspecialchars($transaksi['status']); ?></td>
                                     <td><?= htmlspecialchars($transaksi['status_bayar']); ?></td>
                                     <td><?= htmlspecialchars($transaksi['total_harga']); ?></td>

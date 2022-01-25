@@ -11,7 +11,9 @@ $tgl_akhir = $_POST['tgl_akhir'];
 
 $no= 1;
 
-$query = "SELECT transaksi.*,member.* , detail_transaksi.*, paket.*, outlet.* FROM transaksi INNER JOIN member ON member.id_member = transaksi.member_id INNER JOIN detail_transaksi ON detail_transaksi.transaksi_id = transaksi.id_transaksi INNER JOIN paket ON paket.id_paket=detail_transaksi.paket_id INNER JOIN outlet ON outlet.id_outlet=transaksi.outlet_id and tgl between '$tgl_awal' and '$tgl_akhir' ";
+$query = "SELECT transaksi.*,member.* , detail_transaksi.*, paket.*, outlet.* FROM transaksi INNER JOIN member ON member.id_member = transaksi.member_id INNER JOIN detail_transaksi ON detail_transaksi.transaksi_id = transaksi.id_transaksi INNER JOIN paket ON paket.id_paket=detail_transaksi.paket_id INNER JOIN outlet ON outlet.id_outlet=transaksi.outlet_id and transaksi.outlet_id = ". $_GET['id'] ." and tgl between '$tgl_awal' and '$tgl_akhir' ";
+// Bayar saja
+// $query = "SELECT transaksi.*,member.* , detail_transaksi.*, paket.*, outlet.* FROM transaksi INNER JOIN member ON member.id_member = transaksi.member_id INNER JOIN detail_transaksi ON detail_transaksi.transaksi_id = transaksi.id_transaksi INNER JOIN paket ON paket.id_paket=detail_transaksi.paket_id INNER JOIN outlet ON outlet.id_outlet=transaksi.outlet_id and transaksi.outlet_id = ". $_GET['id'] ." and status_bayar = 'bayar' and tgl between '$tgl_awal' and '$tgl_akhir' ";
 $total = ambilsatubaris($conn,"SELECT SUM(total_harga) AS total FROM detail_transaksi INNER JOIN transaksi ON transaksi.id_transaksi = detail_transaksi.transaksi_id and tgl between '$tgl_awal' and '$tgl_akhir' ");
 $datas = ambildata($conn, $query);
 $datases = mysqli_query($conn, $query);
@@ -41,6 +43,7 @@ $datases = mysqli_query($conn, $query);
             <th>Nama Pelanggan</th>
             <th>Nama Paket</th>
             <th>Status Pesanan</th>
+            <th>Status Bayar</th>
             <th>Jumlah</th>
             <th>Nama Outlet</th>
             <th>Total Harga</th>
@@ -55,6 +58,7 @@ $datases = mysqli_query($conn, $query);
                     <td><?php echo $data['nama_member'] ?></td>
                     <td><?php echo $data['nama_paket'] ?></td>
                     <td><?php echo $data['status'] ?></td>
+                    <td><?php echo $data['status_bayar'] ?></td>
                     <td><?php echo $data['qty'] ?></td>
                     <td><?php echo $data['nama_outlet'] ?></td>
                     <td><?php echo number_format ($data['total_harga']) ?></td>

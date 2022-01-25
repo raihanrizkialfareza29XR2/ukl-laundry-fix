@@ -59,6 +59,33 @@ $data = ambildata($conn,$query);
                         </tbody>
                     </table>
                 </div>
+                <?php foreach($data as $user): ?>
+                    <div class="modal fade" id="smallModal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="smallModalLabel">Password Owner</h4>
+                                </div>
+                                <div class="modal-body">
+                                <form method="POST" action="pengguna_hapus.php?id=<?= $user['id_user'] ?>" target="blank">
+
+                                <label for="">Password Owner :</label>
+
+                                <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" name="passlama" class="form-control"  />
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" onclick="return confirm('Yakin hapus data ? ');" class="btn btn-primary waves-effect">SUBMIT</button>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>

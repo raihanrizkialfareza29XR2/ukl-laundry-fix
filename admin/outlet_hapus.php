@@ -1,7 +1,16 @@
 <?php 
 require 'functions.php';
-$sql = "DELETE FROM outlet WHERE id_outlet = " . $_GET['id'];
-$exe = mysqli_query($conn,$sql);
+$id = $_GET['id'];
+$passwordlam = $_POST['passlama'];
+$querypass = "select * from user where role = 'owner'";
+$passwordlama = mysqli_query($conn, $querypass);
+$passlama = mysqli_fetch_array($passwordlama);
+if(md5($passwordlam) != $passlama['password']){
+    echo "<script>alert('Password tidak sesuai');location.href='outlet.php';</script>";
+} else {
+    $sql = "DELETE FROM outlet WHERE id_outlet = " . $_GET['id'];
+    $exe = mysqli_query($conn,$sql);
+}
 
 if($exe){
     // $success = 'true';

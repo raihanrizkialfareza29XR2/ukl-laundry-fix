@@ -5,7 +5,7 @@ require 'layout_header.php';
 $jTransaksi = ambilsatubaris($conn,'SELECT COUNT(id_transaksi) as jumlahtransaksi FROM transaksi');
 $jPelanggan = ambilsatubaris($conn,'SELECT COUNT(id_member) as jumlahmember FROM member');
 $joutlet = ambilsatubaris($conn,'SELECT COUNT(id_outlet) as jumlahoutlet FROM outlet');
-$query = "SELECT transaksi.*,member.nama_member , detail_transaksi.total_harga FROM transaksi INNER JOIN member ON member.id_member = transaksi.member_id INNER JOIN detail_transaksi ON detail_transaksi.transaksi_id = transaksi.id_transaksi   ORDER BY transaksi.id_transaksi DESC LIMIT 10";
+$query = "SELECT transaksi.*,member.nama_member , detail_transaksi.total_harga, detail_transaksi.qty, paket.* FROM transaksi INNER JOIN member ON member.id_member = transaksi.member_id INNER JOIN detail_transaksi ON detail_transaksi.transaksi_id = transaksi.id_transaksi INNER JOIN paket ON paket.id_paket = detail_transaksi.paket_id   ORDER BY transaksi.id_transaksi DESC LIMIT 10";
 $data = ambildata($conn,$query);
 ?> 
 <div class="container-fluid">
@@ -70,10 +70,12 @@ $data = ambildata($conn,$query);
                                 <th>#</th>
                                 <th>Invoice</th>
                                 <th>Member</th>
+                                <th>Nama Paket</th>
+                                <th>Jumlah</th>
+                                <th>Harga Paket</th>
                                 <th>Status</th>
-                                <th>Pemabayaran</th>
+                                <th>Pembayaran</th>
                                 <th>Total Harga</th>
-                                <th width="15%">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -82,12 +84,12 @@ $data = ambildata($conn,$query);
                                     <td><?= $no++ ?></td>
                                     <td><?= $transaksi['kode_invoice'] ?></td>
                                     <td><?= $transaksi['nama_member'] ?></td>
+                                    <td><?= $transaksi['nama_paket'] ?></td>
+                                    <td><?= $transaksi['qty'] ?></td>
+                                    <td><?= $transaksi['harga'] ?></td>
                                     <td><?= $transaksi['status'] ?></td>
                                     <td><?= $transaksi['status_bayar'] ?></td>
                                     <td><?= $transaksi['total_harga'] ?></td>
-                                    <td align="center">
-                                          <a href="transaksi_detail.php?id=<?= $transaksi['id_transaksi']; ?>" data-toggle="tooltip" data-placement="bottom" title="Edit" class="btn btn-success btn-block">Detail</a>
-                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

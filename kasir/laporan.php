@@ -2,16 +2,17 @@
 $title = 'laporan';
 require 'functions.php';
 require 'layout_header.php';
-$bulan = ambilsatubaris($conn,"SELECT SUM(total_harga) AS total FROM detail_transaksi INNER JOIN transaksi ON transaksi.id_transaksi = detail_transaksi.transaksi_id WHERE status_bayar = 'dibayar' AND MONTH(tgl_pembayaran) = MONTH(NOW())");
-$tahun = ambilsatubaris($conn,"SELECT SUM(total_harga) AS total FROM detail_transaksi INNER JOIN transaksi ON transaksi.id_transaksi = detail_transaksi.transaksi_id WHERE status_bayar = 'dibayar' AND YEAR(tgl_pembayaran) = YEAR(NOW())");
-$minggu = ambilsatubaris($conn,"SELECT SUM(total_harga) AS total FROM detail_transaksi INNER JOIN transaksi ON transaksi.id_transaksi = detail_transaksi.transaksi_id WHERE status_bayar = 'dibayar' AND WEEK(tgl_pembayaran) = WEEK(NOW(), 3)");
+$outlet_id = $_SESSION['outlet_id'];
+$bulan = ambilsatubaris($conn,"SELECT SUM(total_harga) AS total FROM detail_transaksi INNER JOIN transaksi ON transaksi.id_transaksi = detail_transaksi.transaksi_id WHERE status_bayar = 'dibayar' AND MONTH(tgl_pembayaran) = MONTH(NOW()) AND transaksi.outlet_id = $outlet_id ");
+$tahun = ambilsatubaris($conn,"SELECT SUM(total_harga) AS total FROM detail_transaksi INNER JOIN transaksi ON transaksi.id_transaksi = detail_transaksi.transaksi_id WHERE status_bayar = 'dibayar' AND YEAR(tgl_pembayaran) = YEAR(NOW()) AND transaksi.outlet_id = $outlet_id ");
+$minggu = ambilsatubaris($conn,"SELECT SUM(total_harga) AS total FROM detail_transaksi INNER JOIN transaksi ON transaksi.id_transaksi = detail_transaksi.transaksi_id WHERE status_bayar = 'dibayar' AND WEEK(tgl_pembayaran) = WEEK(NOW(), 3) AND transaksi.outlet_id = $outlet_id ");
 // die($minggu['total']);
 
 
 $penjualan = ambildata($conn,"SELECT SUM(detail_transaksi.total_harga) AS total,COUNT(detail_transaksi.paket_id) as jumlah_paket,paket.nama_paket,transaksi.tgl_pembayaran FROM detail_transaksi
 INNER JOIN transaksi ON transaksi.id_transaksi = detail_transaksi.transaksi_id
 INNER JOIN paket ON paket.id_paket = detail_transaksi.paket_id
-WHERE transaksi.status_bayar = 'dibayar' GROUP BY detail_transaksi.paket_id");
+WHERE transaksi.status_bayar = 'dibayar' and transaksi.outlet_id = ". $outlet_id ." GROUP BY detail_transaksi.paket_id");
 ?>
 <div class="container-fluid">
     <div class="row bg-title">
@@ -105,7 +106,7 @@ WHERE transaksi.status_bayar = 'dibayar' GROUP BY detail_transaksi.paket_id");
                                 <h4 class="modal-title" id="smallModalLabel">Laporan Penjualan</h4>
                             </div>
                             <div class="modal-body">
-                            <form method="POST" action="cetaklaporan.php" target="blank">
+                            <form method="POST" action="cetaklaporan.php?id=<?= $outlet_id ?>" target="blank">
 
                             <label for="">Tanggal Awal</label>
 
